@@ -16,10 +16,10 @@ spring:
       enabled: false
   #oracle settings
   datasource:
-      driver-class-name: oracle.jdbc.OracleDriver
-      url: jdbc:oracle:thin:@localhost:1521:orcl
-      username: c##scott
-      password: 1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://database-2.ctyqq6wis0lj.ap-northeast-2.rds.amazonaws.com:3306/practiceDB?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      username: admin
+      password: cjfals62
 
 
 #mybatis settings

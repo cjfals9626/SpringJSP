@@ -2,6 +2,9 @@ package org.spring.spring.boot.vo;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
+
 @Data
 public class StudyVo {
     private String keyId;
