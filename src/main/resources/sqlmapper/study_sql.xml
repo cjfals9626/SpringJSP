@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.spring.spring.boot.dao.StudyDao">
+
+    <select id="doStudyList_Back" resultType="map">
+        select to_char(key_id) as key_id, study_day, contents, to_char(reg_day,'yyyy.mm.dd hh24mi') as reg_day
+        from study_record
+    </select>
+
+<!--    <resultMap id="map_StudyVo" type="org.spring.spring.boot.vo.StudyVo">
+        &lt;!&ndash;자바 객체와 DB 매핑&ndash;&gt;
+        &lt;!&ndash;property = 자바객체 필드명 column=데이터베이스 필드명  (옵션  jdbcType=DB 필드 타입 javaType=자바 타입 )&ndash;&gt;
+        &lt;!&ndash;자세한 설명은 Mybatis 공식 문서를 찾아보는 게 좋다. 예시 등 잘 되어 있음&ndash;&gt;
+        <result property="key_id" column="key_id" jdbcType="NVARCHAR" javaType="String" />
+        <result property="study_day" column="study_day"/>
+        <result property="contents" column="contents"/>
+        <result property="reg_day" column="reg_day"/>
+    </resultMap>
+
+
+    <select id="doStudyList" resultMap="map_StudyVo">
+        select to_char(key_id) as key_id, study_day, contents, to_char(reg_day,'yyyy.mm.dd hh24mi') as reg_day
+        from study_record
+    </select>-->
+
+    <select id="doStudyList" resultType="org.spring.spring.boot.vo.StudyVo">
+        select to_char(key_id) as key_id, study_day, contents, to_char(reg_day,'yyyy.mm.dd hh24mi') as reg_day
+        from study_record
+    </select>
+
+
+    <!--파라미터 타입은 명시해줘도 되지만, 기본 타입은 하지 않아도 타입 핸들러가 알아서 가져온다-->
+    <select id="doStudyVo" resultType="org.spring.spring.boot.vo.StudyVo">
+        select to_char(key_id) as key_id, study_day, contents, to_char(reg_day,'yyyy.mm.dd hh24mi') as reg_day
+        from study_record
+        where key_id = #{keyId}
+    </select>
+    <!--where DB 필드 명 = #{DAO 파라미터 명}-->
+
+
+    <!--수정하는 매퍼-->
+    <update id="doStudyUpdate" parameterType="org.spring.spring.boot.vo.StudyVo">
+        update study_record
+        set study_day = #{studyDay}, contents = #{contents}, reg_day = sysdate
+        where key_id = #{keyId}
+    </update>
+    <!--DB 필드 명 = #{VO 속성 명}-->
+
+    <!--삭제하는 매퍼-->
+    <delete id="doDelete">
+        delete from study_record
+        where key_id = #{studyId}
+    </delete>
+    <!--DB 필드 명 = #{DAO 파라미터 명}-->
+
+    <!--등록하는 매퍼-->
+    <insert id="doStudyInsert">
+        insert into study_record
+        (study_day, contents, reg_day)
+        values
+        (#{studyDay}, #{contents}, sysdate)
+    </insert>
+    <!--keyId는 자동으로 들어갈 수 있도록 만들어 놓음-->
+
+</mapper>
